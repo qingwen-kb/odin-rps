@@ -1,4 +1,16 @@
 let move = ["rock", "paper", "sicssor"];
+let playerScore = 0;
+let computerScore = 0;
+let playerSelection;
+const wrapper = document.querySelector(".wrapper");
+const displayResult = document.querySelector(".display-result");
+const displayPlayerScore = document.querySelector(".player-score");
+const displayComputerScore = document.querySelector(".computer-score");
+
+wrapper.addEventListener("click", (event) => {
+  playerSelection = event.target.value;
+  game(playerSelection);
+});
 
 function makeMove() {
   return move[Math.floor(Math.random() * move.length)];
@@ -13,24 +25,27 @@ function playRound(playerMove, computerMove) {
     (playerMove === "paper" && computerMove === "rock") ||
     (playerMove === "sicssor" && computerMove === "paper")
   ) {
-    console.log(`You win! ${playerMove} beat ${computerMove}`);
-    winner = "winner: player";
+    displayResult.innerText = `You win! ${playerMove} beat ${computerMove}`;
+    winner = "player";
   } else {
-    console.log(`You lose! ${playerMove} lose ${computerMove}`);
-    winner = "winner: computer";
+    displayResult.innerText = `You lose! ${playerMove} lose ${computerMove}`;
+    winner = "computer";
   }
   return winner;
 }
 
-function game(round) {
-  let scoreBoard = [];
-  for (let i = 0; i < round; i++) {
-    let playerMove = prompt("Enter Rock, Paper or Sicssor").toLowerCase();
-    let computerMove = makeMove();
-    scoreBoard.push(playRound(playerMove, computerMove));
+function game(playerSelection) {
+  let playerMove = playerSelection;
+  let computerMove = makeMove();
+  if (playRound(playerMove, computerMove) === "player") {
+    playerScore++;
+  } else {
+    computerScore++;
   }
-  console.log(scoreBoard);
+  displayScore(playerScore, computerScore);
 }
 
-let numberOfRound = prompt("Enter number of rounds");
-game(numberOfRound);
+function displayScore(playerScore, computerScore) {
+  displayPlayerScore.innerText = playerScore;
+  displayComputerScore.innerText = computerScore;
+}
