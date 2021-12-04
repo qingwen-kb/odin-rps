@@ -2,14 +2,19 @@ let move = ["rock", "paper", "sicssor"];
 let playerScore = 0;
 let computerScore = 0;
 let playerSelection;
-const wrapper = document.querySelector(".wrapper");
-const displayResult = document.querySelector(".display-result");
+
+const displayStatus = document.querySelector(".display-status");
 const displayPlayerScore = document.querySelector(".player-score");
 const displayComputerScore = document.querySelector(".computer-score");
+const displayWinner = document.querySelector(".winner-result");
+const resetButton = document.querySelector(".reset-btn");
+const wrapperButtons = document.querySelectorAll(".wrapper button");
 
-wrapper.addEventListener("click", (event) => {
-  playerSelection = event.target.value;
-  game(playerSelection);
+wrapperButtons.forEach((element) => {
+  element.addEventListener("click", (event) => {
+    playerSelection = event.target.value;
+    game(playerSelection);
+  });
 });
 
 function makeMove() {
@@ -25,10 +30,10 @@ function playRound(playerMove, computerMove) {
     (playerMove === "paper" && computerMove === "rock") ||
     (playerMove === "sicssor" && computerMove === "paper")
   ) {
-    displayResult.innerText = `You win! ${playerMove} beat ${computerMove}`;
+    displayStatus.innerText = `You win! ${playerMove} beat ${computerMove}`;
     winner = "player";
   } else {
-    displayResult.innerText = `You lose! ${playerMove} lose ${computerMove}`;
+    displayStatus.innerText = `You lose! ${playerMove} lose ${computerMove}`;
     winner = "computer";
   }
   return winner;
@@ -43,9 +48,25 @@ function game(playerSelection) {
     computerScore++;
   }
   displayScore(playerScore, computerScore);
+
+  if (playerScore === 5) {
+    displayWinner.innerText = "You won!!";
+
+    wrapperButtons.forEach((element) => (element.disabled = true));
+  } else if (computerScore === 5) {
+    displayWinner.innerText = "Computer Won!";
+
+    wrapperButtons.forEach((element) => (element.disabled = true));
+  }
 }
 
 function displayScore(playerScore, computerScore) {
   displayPlayerScore.innerText = playerScore;
   displayComputerScore.innerText = computerScore;
+}
+
+resetButton.addEventListener("click", resetGame);
+
+function resetGame() {
+  location.reload();
 }
