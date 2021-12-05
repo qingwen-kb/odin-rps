@@ -30,10 +30,10 @@ function playRound(playerMove, computerMove) {
     (playerMove === "paper" && computerMove === "rock") ||
     (playerMove === "sicssor" && computerMove === "paper")
   ) {
-    displayStatus.innerText = `You win! ${playerMove} beat ${computerMove}`;
+    displayStatus.textContent = `You win! ${playerMove} beat ${computerMove}`;
     winner = "player";
   } else {
-    displayStatus.innerText = `You lose! ${playerMove} lose ${computerMove}`;
+    displayStatus.textContent = `You lose! ${playerMove} lose ${computerMove}`;
     winner = "computer";
   }
   return winner;
@@ -50,19 +50,19 @@ function game(playerSelection) {
   displayScore(playerScore, computerScore);
 
   if (playerScore === 5) {
-    displayWinner.innerText = "You won!!";
+    displayWinner.textContent = "You won!!";
 
     wrapperButtons.forEach((element) => (element.disabled = true));
   } else if (computerScore === 5) {
-    displayWinner.innerText = "Computer Won!";
+    displayWinner.textContent = "Computer Won!";
 
     wrapperButtons.forEach((element) => (element.disabled = true));
   }
 }
 
 function displayScore(playerScore, computerScore) {
-  displayPlayerScore.innerText = playerScore;
-  displayComputerScore.innerText = computerScore;
+  displayPlayerScore.textContent = playerScore;
+  displayComputerScore.textContent = computerScore;
 }
 
 resetButton.addEventListener("click", resetGame);
